@@ -7,10 +7,8 @@ import com.example.sixsevenchan.entity.Board;
 import com.example.sixsevenchan.entity.Post;
 import com.example.sixsevenchan.entity.Thread;
 import com.example.sixsevenchan.repository.BoardRepository;
-import com.example.sixsevenchan.repository.PostRepository;
 import com.example.sixsevenchan.repository.ThreadRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

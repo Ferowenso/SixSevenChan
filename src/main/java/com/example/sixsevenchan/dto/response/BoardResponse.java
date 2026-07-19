@@ -1,11 +1,8 @@
 package com.example.sixsevenchan.dto.response;
 
-import com.example.sixsevenchan.entity.Thread;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
