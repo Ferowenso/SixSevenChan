@@ -6,6 +6,7 @@ import com.example.sixsevenchan.dto.response.ThreadResponse;
 import com.example.sixsevenchan.entity.Board;
 import com.example.sixsevenchan.entity.Post;
 import com.example.sixsevenchan.entity.Thread;
+import com.example.sixsevenchan.exception.ResourceNotFoundException;
 import com.example.sixsevenchan.repository.BoardRepository;
 import com.example.sixsevenchan.repository.ThreadRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class ThreadService {
     @Transactional
     public ThreadResponse save(String prefix, ThreadCreateRequest request){
 
-        Board board = boardRepository.findByPrefix(prefix).orElseThrow(() -> new IllegalArgumentException("Доски с префиксом /" +prefix +" не существует"));
+        Board board = boardRepository.findByPrefix(prefix).orElseThrow(() -> new ResourceNotFoundException("Доски с префиксом /" +prefix +" не существует"));
 
         Thread thread = new Thread();
         thread.setSubject(request.getSubject());
@@ -52,7 +53,7 @@ public class ThreadService {
 
     @Transactional(readOnly = true)
     public List<ThreadResponse> findAllByBoard(String prefix){
-        Board board = boardRepository.findByPrefix(prefix).orElseThrow(() -> new IllegalArgumentException("Доски с префиксом /" +prefix +" не существует"));
+        Board board = boardRepository.findByPrefix(prefix).orElseThrow(() -> new ResourceNotFoundException("Доски с префиксом /" +prefix +" не существует"));
         List<Thread> threads = threadRepository.findThreadsByBoard(board);
         return threads.stream().map(t -> new ThreadResponse(
                 t.getId(),

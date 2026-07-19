@@ -3,6 +3,8 @@ package com.example.sixsevenchan.service;
 import com.example.sixsevenchan.dto.request.BoardCreateRequest;
 import com.example.sixsevenchan.dto.response.BoardResponse;
 import com.example.sixsevenchan.entity.Board;
+import com.example.sixsevenchan.exception.ResourceAlreadyExistsException;
+import com.example.sixsevenchan.exception.ResourceNotFoundException;
 import com.example.sixsevenchan.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class BoardService {
     @Transactional
     public BoardResponse save(BoardCreateRequest request){
         if (boardRepository.existsByPrefix(request.getPrefix())){
-            throw new IllegalArgumentException("Доска с префиксом /"+ request.getPrefix() +" уже существует");
+            throw new ResourceAlreadyExistsException("Доска с префиксом /"+ request.getPrefix() +" уже существует");
         }
 
         Board board = new Board();
@@ -36,7 +38,7 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public BoardResponse findById(Long id){
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Борды не существует"));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Борды не существует"));
 
         return new BoardResponse(
                 board.getId(),

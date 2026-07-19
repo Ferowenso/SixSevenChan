@@ -4,6 +4,7 @@ import com.example.sixsevenchan.dto.request.PostCreateRequest;
 import com.example.sixsevenchan.dto.response.PostResponse;
 import com.example.sixsevenchan.entity.Post;
 import com.example.sixsevenchan.entity.Thread;
+import com.example.sixsevenchan.exception.ResourceNotFoundException;
 import com.example.sixsevenchan.repository.PostRepository;
 import com.example.sixsevenchan.repository.ThreadRepository;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class PostService {
     public List<PostResponse> findAllByThread(Long threadId){
 
         if (!threadRepository.existsById(threadId)) {
-            throw new IllegalArgumentException("Треда с айди " + threadId + " не существует");
+            throw new ResourceNotFoundException("Треда с айди " + threadId + " не существует");
         }
 
         List<Post> posts = postRepository.getPostByThreadId(threadId);
@@ -37,7 +38,7 @@ public class PostService {
 
     @Transactional
     public PostResponse save(Long threadId,PostCreateRequest request){
-        Thread thread = threadRepository.findById(threadId).orElseThrow(() -> new IllegalArgumentException("Треда с айди " + threadId + " не существует"));
+        Thread thread = threadRepository.findById(threadId).orElseThrow(() -> new ResourceNotFoundException("Треда с айди " + threadId + " не существует"));
 
         Post post = new Post();
         post.setText(request.getText());
