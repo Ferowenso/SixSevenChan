@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,11 +26,16 @@ public class Thread {
     @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
     private List<Post> posts;
 
-    private boolean is_pinned;
+    private boolean isPinned;
 
-    private boolean is_closed;
+    private boolean isClosed;
 
-    private LocalDateTime created_at;
+    @Column(columnDefinition = "TEXT")
+    private String subject;
 
-    private LocalDateTime updated_at;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @CreationTimestamp
+    private LocalDateTime updatedAt;
 }
