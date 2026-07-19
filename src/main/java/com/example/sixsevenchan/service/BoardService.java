@@ -17,7 +17,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public BoardResponse createBoard(BoardCreateRequest request){
+    public BoardResponse save(BoardCreateRequest request){
         if (boardRepository.existsByPrefix(request.getPrefix())){
             throw new IllegalArgumentException("Доска с префиксом /"+ request.getPrefix() +" уже существует");
         }
@@ -35,7 +35,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public BoardResponse getBoardById(Long id){
+    public BoardResponse findById(Long id){
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Борды не существует"));
 
         return new BoardResponse(
@@ -46,7 +46,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<BoardResponse> getBoards(){
+    public List<BoardResponse> findAll(){
         List<Board> boards = boardRepository.findAll();
 
         return boards.stream().map(board -> new BoardResponse(
