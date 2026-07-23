@@ -27,4 +27,6 @@ public class Post {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    private boolean isOp = false;
 }
