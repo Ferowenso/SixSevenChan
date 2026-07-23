@@ -16,13 +16,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
         Long getId();
         String getText();
         LocalDateTime getCreatedAt();
+        boolean isSage();
         Long getThreadId();
     }
 
     @Query(value = """
-    SELECT id, text, created_at AS createdAt, thread_id AS threadId
+    SELECT id, text, created_at AS createdAt, thread_id AS threadId, is_sage as sage
     FROM (
-        SELECT p.id, p.text, p.created_at, p.thread_id, p.is_op,
+        SELECT p.id, p.text, p.created_at, p.thread_id, p.is_op, p.is_sage,
                ROW_NUMBER() OVER(PARTITION BY p.thread_id ORDER BY p.created_at DESC) as rn
         FROM post p
         WHERE p.thread_id IN (:threadIds)

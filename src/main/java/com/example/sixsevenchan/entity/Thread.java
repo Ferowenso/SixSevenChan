@@ -40,4 +40,6 @@ public class Thread {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    private LocalDateTime bumpedAt;
 }

@@ -12,5 +12,6 @@ public class PostResponse {
     private Long id;
     private String text;
     private LocalDateTime createdAt;
+    private boolean isSage;
 
 }

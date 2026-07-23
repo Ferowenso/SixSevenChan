@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class ThreadService {
         Thread thread = new Thread();
         thread.setSubject(request.getSubject());
         thread.setBoard(board);
+        thread.setBumpedAt(LocalDateTime.now());
 
         Post post = new Post();
         post.setThread(thread);
@@ -52,9 +54,10 @@ public class ThreadService {
                 savedThread.isClosed(),
                 savedThread.getCreatedAt(),
                 savedThread.getUpdatedAt(),
+                savedThread.getBumpedAt(),
                 savedThread.getPosts()
                         .stream()
-                        .map(p -> new PostResponse(p.getId(), p.getText(), p.getCreatedAt()))
+                        .map(p -> new PostResponse(p.getId(), p.getText(), p.getCreatedAt(), p.isSage()))
                         .toList());
     }
 
@@ -73,7 +76,7 @@ public class ThreadService {
                 .collect(Collectors.groupingBy(
                         PostRepository.PostSummaryProjection::getThreadId,
                         Collectors.mapping(
-                                p -> new PostResponse(p.getId(), p.getText(), p.getCreatedAt()),
+                                p -> new PostResponse(p.getId(), p.getText(), p.getCreatedAt(), p.isSage()),
                                 Collectors.toList()
                         )
                 ));
@@ -86,6 +89,7 @@ public class ThreadService {
                 t.isClosed(),
                 t.getCreatedAt(),
                 t.getUpdatedAt(),
+                t.getBumpedAt(),
                 postsByThreadId.getOrDefault(t.getId(), List.of())));
 
     }

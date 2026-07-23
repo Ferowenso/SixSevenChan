@@ -33,7 +33,8 @@ public class PostService {
                 .map(p -> new PostResponse(
                         p.getId(),
                         p.getText(),
-                        p.getCreatedAt())).toList();
+                        p.getCreatedAt(),
+                        p.isSage())).toList();
     }
 
     @Transactional
@@ -43,15 +44,19 @@ public class PostService {
         Post post = new Post();
         post.setText(request.getText());
         post.setThread(thread);
+        post.setSage(request.isSage());
 
         Post savedPost = postRepository.save(post);
+
+        if (!savedPost.isSage()) thread.setBumpedAt(LocalDateTime.now());
 
         thread.setUpdatedAt(LocalDateTime.now());
 
         return new PostResponse(
                 savedPost.getId(),
                 savedPost.getText(),
-                savedPost.getCreatedAt());
+                savedPost.getCreatedAt(),
+                savedPost.isSage());
 
     }
 

@@ -22,7 +22,7 @@ public class ThreadController {
     private final ThreadService threadService;
 
     @GetMapping
-    public Page<ThreadResponse> findAllByBoard(@PathVariable String prefix, @PageableDefault(size = 15, sort = "updatedAt", direction = Sort.Direction.DESC) Pageable pageable){
+    public Page<ThreadResponse> findAllByBoard(@PathVariable String prefix, @PageableDefault(size = 15, sort = "bumpedAt", direction = Sort.Direction.DESC) Pageable pageable){
         return threadService.findAllByBoard(prefix, pageable);
     }
 

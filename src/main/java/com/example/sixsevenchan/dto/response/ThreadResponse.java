@@ -16,6 +16,7 @@ public class ThreadResponse {
     private boolean isClosed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime bumpedAt;
     private List<PostResponse> posts;
 
 }

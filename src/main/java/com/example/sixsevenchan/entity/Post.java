@@ -29,4 +29,6 @@ public class Post {
     private LocalDateTime createdAt;
 
     private boolean isOp = false;
+
+    private boolean isSage = false;
 }
