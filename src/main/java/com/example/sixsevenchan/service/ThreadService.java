@@ -58,7 +58,8 @@ public class ThreadService {
                 savedThread.getPosts()
                         .stream()
                         .map(p -> new PostResponse(p.getId(), p.getText(), p.getCreatedAt(), p.isSage()))
-                        .toList());
+                        .toList(),
+                savedThread.getPostCount());
     }
 
     @Transactional(readOnly = true)
@@ -90,7 +91,8 @@ public class ThreadService {
                 t.getCreatedAt(),
                 t.getUpdatedAt(),
                 t.getBumpedAt(),
-                postsByThreadId.getOrDefault(t.getId(), List.of())));
+                postsByThreadId.getOrDefault(t.getId(), List.of()),
+                t.getPostCount()));
 
     }
 

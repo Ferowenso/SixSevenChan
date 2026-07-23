@@ -18,5 +18,6 @@ public class ThreadResponse {
     private LocalDateTime updatedAt;
     private LocalDateTime bumpedAt;
     private List<PostResponse> posts;
+    private Integer postCount;
 
 }

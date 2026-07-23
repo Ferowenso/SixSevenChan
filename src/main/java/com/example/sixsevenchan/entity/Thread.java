@@ -42,4 +42,6 @@ public class Thread {
     private LocalDateTime updatedAt;
 
     private LocalDateTime bumpedAt;
+
+    private Integer postCount = 1;
 }

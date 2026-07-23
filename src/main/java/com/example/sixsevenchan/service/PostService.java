@@ -48,9 +48,12 @@ public class PostService {
 
         Post savedPost = postRepository.save(post);
 
-        if (!savedPost.isSage()) thread.setBumpedAt(LocalDateTime.now());
+        if (thread.getPostCount() < 500 && !post.isSage()){
+            thread.setBumpedAt(LocalDateTime.now());
+        }
 
         thread.setUpdatedAt(LocalDateTime.now());
+        thread.setPostCount(thread.getPostCount()+1);
 
         return new PostResponse(
                 savedPost.getId(),
